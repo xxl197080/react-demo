@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+// import Login from './views/login'
+// import Regiter from './views/regiter'
+// import Home from './views/home'
+import Loadable from 'react-loadable'
+import { SpinWrap } from './style'
+// 引入自己写的高阶函数组件，实现路由拦截
+import AuthRoute from './utils/Auth'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const Home = Loadable({
+  // 需要懒加载的组件
+  loader: () => import('./views/home'),
+  // 加载中的提示组件
+  loading: () => <SpinWrap />
+})
+const Regiter = Loadable({
+  loader: () => import('./views/regiter'),
+  loading: () => <SpinWrap />
+})
+const Login = Loadable({
+  loader: () => import('./views/login'),
+  loading: () => <SpinWrap />
+})
+
+export default class App extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="regiter" component={Regiter} />
+          <AuthRoute path="/" component={Home} />
+          {/* <Redirect to="/home" /> */}
+        </Switch>
+      </Router>
+    )
+  }
 }
-
-export default App;

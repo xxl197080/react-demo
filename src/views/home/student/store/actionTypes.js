@@ -1,0 +1,5 @@
+export const GET_STUDENT_LIST = 'student/get_student_list'
+export const DEL_STUDENT = 'student/del_student'
+export const UPDATE_STUDENT = 'student/update_student'
+export const CHG_VISIBLE = 'student/chg_visible'
+export const CHG_STUDENT = 'student/chg_student'
