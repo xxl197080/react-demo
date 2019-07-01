@@ -32,12 +32,24 @@ class Student extends React.Component {
         return (
           <div>
             <Button type="primary" onClick={this.props.handleOpenModal.bind(null, row._id)}>编辑</Button>
-            <Button type="danger"  onClick={this.props.handleDelStudent.bind(null, row._id)}>删除</Button>
+            <Button type="danger"  onClick={this.showDelModal.bind(null, row._id)}>删除</Button>
           </div>
         )
       }
     }
   ]
+
+  // 点击删除显示删除提示框
+  showDelModal = (id) => {
+    Modal.confirm({
+      title: '删除警告',
+      content: '确认要删除该学生吗？',
+      onOk: () => {
+        this.props.handleDelStudent(id)
+      }
+    })
+  }
+
   // 模态框的显示与隐藏，并且显示相应的学生信息，如果写在 render 里面， 这个组件的 defaultValue， 所以要控制它关闭之后销毁掉，显示的时候又重新创建出来这个组件就渲染新的数据。
   showModal = () => {
     let studentInfo = this.props.list.find(item => (item._id === this.props.studentId))|| {}
